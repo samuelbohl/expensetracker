@@ -8,7 +8,7 @@ Its a simple webapp where you can:
   * visualize and track your spending
   
 ## Tech
-I decided to use the LAMP stack, which is essentially PHP as backend and MySQL as database. <br>
+I decided to use the LAMP stack. (PHP as backend and MySQL as database) <br>
 For the frontend I used a Bootstrap template and a few javascript frameworks, namely Chart.js and DataTables. <br>
 The icons are from FontAwesome (Free Version) 
 
