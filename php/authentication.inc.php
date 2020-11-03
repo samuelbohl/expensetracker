@@ -1,9 +1,18 @@
 <?php
 
-class Authentication{
+class Authentication {
     
+    /**
+     * Database connection link
+     * 
+     * @var mysqli (FALSE when connection failed, otherwise its an mysqli object)
+     */
     protected $connection;
     
+
+    /**
+     * Authentication constructor
+     */
     public function __construct(){
         require '../php/dbconnection.inc.php';
         $this->connection = $link;
@@ -18,32 +27,44 @@ class Authentication{
 
     }
 
+    /**
+     * checks if cookies are valid
+     * 
+     * @return Boolean
+     */ 
     public function cookies_are_valid(){
 
         return (array_key_exists("id", $_SESSION) AND $_SESSION['id']) OR (array_key_exists("id", $_COOKIE) AND $_COOKIE['id']);
 
     }
 
+    /**
+     * checks if user is logged in and redirects to login page if not
+     */ 
     public function validate_session(){
 
         session_start();
 
+        //if a valid cookie is set -> update session/login
         if (array_key_exists("id", $_COOKIE)) {
 
             $_SESSION['id'] = $_COOKIE['id'];
 
         }
 
-        if (array_key_exists("id", $_SESSION)) {
-
-        } else {
-
+        //redirects to login page if not logged in
+        if (!array_key_exists("id", $_SESSION)) {
             header("Location: login.php");
-
         }
 
     }
 
+    /**
+     * validates all form elements and returns the appropriate error message
+     * - gets the data from POST
+     * 
+     * @return String
+     */ 
     public function validate_form(){
 
         $error = "";
@@ -66,6 +87,12 @@ class Authentication{
         return $error;
     }
 
+    /**
+     * validates userdata, inserts the new user in the database and returns the corresponding error message
+     * - if successful redirects to dashboard
+     * 
+     * @return String
+     */ 
     public function sign_up(){
 
         $error = "";
@@ -118,6 +145,12 @@ class Authentication{
         return $error;
     }
 
+    /**
+     * validates username and hashed password with the corresponding entries in the database and returns the corresponding error message
+     * - if successful redirect to dashboard
+     * 
+     * @return String
+     */ 
     public function login(){
 
         $query = "SELECT * FROM `users` WHERE email = '".mysqli_real_escape_string($this->connection, $_POST['email'])."'";
