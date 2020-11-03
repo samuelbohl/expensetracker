@@ -1,12 +1,39 @@
 <?php
 
-class Reports{
+class Reports {
     
+    /**
+     * Database connection link
+     * 
+     * @var mysqli (FALSE when connection failed, otherwise its an mysqli object)
+     */
     protected $connection;
+
+    /**
+     * Categories
+     * 
+     * @var Categories 
+     */
     protected $categories;
+
+    /**
+     * Categories
+     * 
+     * @var Transactions 
+     */
     protected $transactions;
+
+    /**
+     * Budgets
+     * 
+     * @var Budgets 
+     */
     protected $budgets;
-    
+
+
+    /**
+     * Reports constructor
+     */ 
     public function __construct() {
         require '../php/dbconnection.inc.php';
         $this->connection = $link;
@@ -15,7 +42,11 @@ class Reports{
         $this->budgets = new Budgets();
     }
     
-    //returns all categories that have expenses and for each category the amount spent is summed up
+    /**
+     * returns all categories that have expenses and for each category the amount spent is summed up
+     * 
+     * @return String (in JSON Fromat)
+     */ 
     public function get_summed_expenses_by_categories(){
 
         $transactions = $this->transactions->get_transactions();
@@ -51,6 +82,11 @@ class Reports{
         return json_encode($return_arr);
     }
 
+    /**
+     * summes up all expenses by the month
+     * 
+     * @return String (in JSON Fromat)
+     */ 
     public function get_summed_expenses_by_month(){
         
         //TODO only for the past year (because of transactions in the future..)
@@ -82,6 +118,11 @@ class Reports{
 
     }
 
+    /**
+     * calculates percentage of every budget goal
+     * 
+     * @return String (in JSON Fromat)
+     */ 
     function get_percentage_of_budget_goals(){
 
         $summedExpensesByCategories = json_decode($this->get_summed_expenses_by_categories(), true);
