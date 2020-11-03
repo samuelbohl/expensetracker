@@ -1,16 +1,35 @@
 <?php
 
-class Budgets{
+class Budgets {
     
+    /**
+     * Database connection link
+     * 
+     * @var mysqli (FALSE when connection failed, otherwise its an mysqli object)
+     */
     protected $connection;
+
+    /**
+     * Categories
+     * 
+     * @var Categories 
+     */
     protected $categories;
     
+    /**
+     * Budgets constructor
+     */
     public function __construct() {
         require '../php/dbconnection.inc.php';
         $this->connection = $link;
         $this->categories = new Categories();
     }
     
+    /**
+     * retireves all budgets from the database and encodes it in a JSON String
+     * 
+     * @return String (in JSON format)
+     */ 
     public function get_budgets(){
 
         $userid = $_SESSION['userid'];//POST for transition into microservices
@@ -34,6 +53,11 @@ class Budgets{
         return json_encode($return_arr);
     }
     
+    /**
+     * adds new budget to databse - gets the data via POST and returns an error message if ist a duplicate
+     * 
+     * @return String
+     */ 
     public function add_budget(){
 
         $userid = $_SESSION['userid'];
@@ -52,9 +76,15 @@ class Budgets{
 
         mysqli_query($this->connection, $query);
 
+        return "";
+
     }
     
-    //helper function for add_budget(): duplicate checking for budgets table
+    /**
+     * helper function for add_budget(): duplicate checking for budgets table
+     * 
+     * @return Boolean
+     */ 
     protected function check_for_id_duplicate($categoryId){
         
         $userid = $_SESSION['userid'];
@@ -68,6 +98,9 @@ class Budgets{
 
     }
     
+    /**
+     * deletes budget by the categoryId given via POST
+     */ 
     public function delete_budget(){
 
         $categoryId = $_POST['categoryId'];
