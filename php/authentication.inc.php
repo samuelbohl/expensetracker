@@ -18,6 +18,9 @@ class Authentication {
         $this->connection = $link;
     }
     
+    /**
+     * unsets cookies and destroys session
+     */ 
     public function logout(){
 
         unset($_SESSION);
