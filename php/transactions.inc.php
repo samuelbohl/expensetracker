@@ -1,11 +1,25 @@
 <?php
 
 //TODO: test
-class Transactions{
+class Transactions {
     
+    /**
+     * Database connection link
+     * 
+     * @var mysqli (FALSE when connection failed, otherwise its an mysqli object)
+     */
     protected $connection;
+
+    /**
+     * Categories
+     * 
+     * @var Categories 
+     */
     protected $categories;
     
+    /**
+     * Transactions constructor
+     */ 
     public function __construct() {
         
         require '../php/dbconnection.inc.php';
@@ -14,6 +28,11 @@ class Transactions{
         
     }
     
+    /**
+     * retrieves all transactions of the current user (gets userid via POST) and encodes it in a JSON String.
+     * 
+     * @return String (in JSON Fromat)
+     */ 
     public function get_transactions(){
         
         $userid = $_SESSION['userid']; //mayb with hidden POST for microservices
@@ -51,10 +70,16 @@ class Transactions{
         return json_encode($return_arr);
     }
     
+    /**
+     * adds new transaction to database (gets data from POST) and returns an error message if it failed
+     * 
+     * @return String 
+     */ 
     public function add_transaction(){
         
         //TODO
         //works, better solution for category_id is needed in case of income
+
         $userid = $_SESSION['userid'];
         $expense = $_POST['expense'];
         $date = $_POST['date'];
@@ -79,6 +104,9 @@ class Transactions{
         }  
     }
     
+    /**
+     * deletes transaction by id (from POST)
+     */ 
     public function delete_transaction(){
         
         $userid = $_SESSION['userid'];
