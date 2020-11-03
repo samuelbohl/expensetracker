@@ -1,31 +1,37 @@
 <?php
 
+//Display errors
 ini_set('display_errors', 1);
 error_reporting(~0);
 
+//require all include files
 require './php/config.inc.php';
 
+//authenticate user
 $authentication = new Authentication();
-
 $authentication->validate_session();
 
+//get user information
 $user = new User();
-
 $name = $user->get_fullname();
 
 $transactions = new Transactions();
 $categories = new Categories();
 
+//if user added a transaction
 if(array_key_exists("submit", $_POST)){
     $transactions->add_transaction();
 }
 
+//if user wants to delete transaction
 if(array_key_exists("delete", $_POST)){
     $transactions->delete_transaction();
 }
 
+//get all transactions
 $transactionsArray = $transactions->get_transactions();
 
+//get all categories
 $optionsHTML = $categories->get_html_select_options();
 
 ?>
