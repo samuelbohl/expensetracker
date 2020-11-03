@@ -35,7 +35,7 @@ class Reports {
      * Reports constructor
      */ 
     public function __construct() {
-        require '../php/dbconnection.inc.php';
+        require '../core/dbconnection.inc.php';
         $this->connection = $link;
         $this->categories = new Categories();
         $this->transactions = new Transactions();
