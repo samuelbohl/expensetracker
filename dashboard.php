@@ -1,18 +1,19 @@
 <?php
 
+//Display errors
 ini_set('display_errors', 1);
 error_reporting(~0);
 
+//require all include files
 require './php/config.inc.php';
 
+//authenticate user
 $authentication = new Authentication();
-
 $authentication->validate_session();
 
+//get user information
 $user = new User();
-
 $name = $user->get_fullname();
-
 
 ?>
 
