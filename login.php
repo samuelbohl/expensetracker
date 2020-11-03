@@ -1,33 +1,33 @@
 <?php
 
-    ini_set('display_errors', 1);
-    error_reporting(~0);
+//Display errors
+ini_set('display_errors', 1);
+error_reporting(~0);
 
-    require './php/config.inc.php';
+//require all include files
+require './php/config.inc.php';
 
-    session_start();
+session_start();
+$authentication = new Authentication();
 
-    $authentication = new Authentication();
+$error = "";    
 
-    $error = "";    
+//if user wants to logout
+if (array_key_exists("logout", $_GET)) {
+  $authentication->logout();
 
-    if (array_key_exists("logout", $_GET)) {
+  //if user is already logged in
+} else if($authentication->cookies_are_valid()) {
+  header("Location: dashboard.php");
 
-        $authentication->logout();
+}
 
-    } else if($authentication->cookies_are_valid()) {
+//if user submitted the login form
+if (array_key_exists("submit", $_POST)) {
 
-        header("Location: dashboard.php");
-
-    }
-
-    if (array_key_exists("submit", $_POST)) {
-
-        $error = $authentication->validate_form();
-
-        $error = $authentication->login();
-
-    }
+  $error = $authentication->validate_form();
+  $error = $authentication->login();
+}
 
 ?>
 

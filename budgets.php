@@ -1,32 +1,37 @@
 <?php
-    
+
+//Display errors
 ini_set('display_errors', 1);
 error_reporting(~0);
 
+//require all include files
 require './php/config.inc.php';
 
+//authenticate user
 $authentication = new Authentication();
-
 $authentication->validate_session();
 
+//get user information
 $user = new User();
-
 $name = $user->get_fullname();
 
 $budgets = new Budgets();
 
+//if user wants to delete a budget
 if(array_key_exists("delete", $_POST)){
     $budgets->delete_budget();
 }
 
+//if user wants to add a budget
 if(array_key_exists("submit", $_POST)){
     $budgets->add_budget();
 }
 
+//get all the budget information from the database
 $budgetsArray = $budgets->get_budgets();
 
+//get all the categories
 $categories = new categories();
-
 $optionsHTML = $categories->get_html_select_options();
 
 ?>
