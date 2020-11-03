@@ -29,7 +29,7 @@ class Transactions {
     }
     
     /**
-     * retrieves all transactions of the current user (gets userid via POST) and encodes it in a JSON String.
+     * retrieves all transactions of the current user (gets userid via POST) and encodes it in a JSON String
      * 
      * @return String (in JSON Fromat)
      */ 
