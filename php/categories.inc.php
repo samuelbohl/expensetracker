@@ -1,16 +1,28 @@
 <?php
 
-class Categories{
+class Categories {
     
+    /**
+     * Database connection link
+     * 
+     * @var mysqli (FALSE when connection failed, otherwise its an mysqli object)
+     */ 
     protected $connection;
     
+    /**
+     * Categories Contructor
+     */ 
     public function __construct() {
         require '../php/dbconnection.inc.php';
         $this->connection = $link;
     }
     
-    //returns all categories in JSON format
-    //categoryId will be value of the options
+    /**
+     * returns all categories from the database in JSON format
+     * categoryId will be value of the options
+     * 
+     * @return String (in JSON fromat)
+     */ 
     public function get_categories(){
 
         $userid = $_SESSION['userid'];
@@ -30,6 +42,13 @@ class Categories{
 
     }
     
+    /**
+     * retrieves the category name from the database
+     * 
+     * @param Integer 
+     * 
+     * @return String
+     */ 
     public function get_category_name($categoryId){
         
         $query = "SELECT * FROM `categories` WHERE category_id = $categoryId";
@@ -39,7 +58,12 @@ class Categories{
         return $row['name'];
     
     }
-    
+
+    /**
+     * gets user information from SESSION and new category name from POST and adds the new category to the database
+     * 
+     * @return Boolean
+     */ 
     public function add_category(){
     
         require './php/dbconnection.inc.php';
@@ -59,8 +83,15 @@ class Categories{
         }
     }
     
-    //helper function for add_category(): duplicate checking for categories table
-    protected function check_for_name_duplicate($name){
+    
+    /**
+     * helper function for add_category(): duplicate checking 
+     * 
+     * @param String
+     * 
+     * @return Boolean
+     */ 
+    private function check_for_name_duplicate($name){
 
         require './php/dbconnection.inc.php';
 
@@ -74,8 +105,12 @@ class Categories{
 
     }
     
-    //returns html for options in Categories selector
-    //categoryId is value because the delete function needs to know what to delete..
+    /**
+     * generates html for options in Categories selector
+     * categoryId is value because the delete function needs to know what to delete.
+     * 
+     * @return String
+     */ 
     public function get_html_select_options(){
 
         $options = "";
@@ -93,13 +128,18 @@ class Categories{
         return $options;
     }
     
+    /**
+     * gets cetegoryId from POST and deletes the corresponding row from the database
+     * 
+     * @return Boolean
+     */ 
     public function delete_category(){
 
         $categoryId = $_POST['categoryId'];
         
         $query = "DELETE FROM `categories` WHERE category_id = $categoryId AND user_id != 0";
 
-        mysqli_query($this->connection, $query);
+        return mysqli_query($this->connection, $query);
 
     }
 
