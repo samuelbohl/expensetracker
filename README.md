@@ -3,8 +3,8 @@ This is a pet project I am working on to learn the fundamentals of CRUD style we
 
 ## Features
 Its a simple webapp where you can:
-  * add trancstions
-  * create budgetsand categories
+  * add transactions
+  * create budgets and categories
   * visualize and track your spending
   
 ## Tech
