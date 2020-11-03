@@ -21,7 +21,7 @@ class Categories {
      * returns all categories from the database in JSON format
      * categoryId will be value of the options
      * 
-     * @return String (in JSON fromat)
+     * @return String (in JSON format)
      */ 
     public function get_categories(){
 
