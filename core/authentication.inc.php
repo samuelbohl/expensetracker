@@ -14,7 +14,7 @@ class Authentication {
      * Authentication constructor
      */
     public function __construct(){
-        require '../core/dbconnection.inc.php';
+        require './core/dbconnection.inc.php';
         $this->connection = $link;
     }
     
@@ -156,6 +156,8 @@ class Authentication {
      */ 
     public function login(){
 
+        $error = "";
+
         $query = "SELECT * FROM `users` WHERE email = '".mysqli_real_escape_string($this->connection, $_POST['email'])."'";
 
         $result = mysqli_query($this->connection, $query);
@@ -170,13 +172,13 @@ class Authentication {
 
                 $_SESSION['id'] = $row['id'];
 
-                if ($_POST['stayLoggedIn'] == '1') {
+                if (isset($_POST['stayLoggedIn']) && $_POST['stayLoggedIn'] == '1') {
 
                     setcookie("id", $row['id'], time() + 60*60*24*365);
 
                 }
                 $_SESSION['userid'] = $row['id'];
-                header("Location: dashboard.php");
+                header("Location: ./dashboard.php");
 
             } else {
 

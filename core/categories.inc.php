@@ -13,7 +13,7 @@ class Categories {
      * Categories Contructor
      */ 
     public function __construct() {
-        require '../core/dbconnection.inc.php';
+        require './core/dbconnection.inc.php';
         $this->connection = $link;
     }
     

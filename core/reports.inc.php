@@ -35,7 +35,7 @@ class Reports {
      * Reports constructor
      */ 
     public function __construct() {
-        require '../core/dbconnection.inc.php';
+        require './core/dbconnection.inc.php';
         $this->connection = $link;
         $this->categories = new Categories();
         $this->transactions = new Transactions();
@@ -126,7 +126,8 @@ class Reports {
     function get_percentage_of_budget_goals(){
 
         $summedExpensesByCategories = json_decode($this->get_summed_expenses_by_categories(), true);
-
+        echo "Debug: \n";
+        print_r($summedExpensesByCategories);
         $budgetGoals = json_decode($this->budgets->get_budgets(), true);
 
         $percentageOfBudgetGoals = [];

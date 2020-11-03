@@ -22,7 +22,7 @@ class Transactions {
      */ 
     public function __construct() {
         
-        require '../core/dbconnection.inc.php';
+        require './core/dbconnection.inc.php';
         $this->connection = $link;
         $this->categories = new Categories();
         

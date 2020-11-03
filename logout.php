@@ -1,4 +1,8 @@
 <?php
+
+//require all include files
+require './core/config.inc.php';
+
 session_start();
 
 //logout
