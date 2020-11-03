@@ -5,7 +5,7 @@ ini_set('display_errors', 1);
 error_reporting(~0);
 
 //require all include files
-require './php/config.inc.php';
+require './core/config.inc.php';
 
 session_start();
 $authentication = new Authentication();
